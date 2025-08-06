@@ -1,39 +1,57 @@
-// app/layout.tsx
-import './globals.css';
-import React from 'react';
+'use client';
 
-export const metadata = {
-  title: 'CSE3CWA Assignment',
-  description: 'Next.js Web App for LTU LMS',
-};
+import './globals.css';
+import React, { useState, useEffect } from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    document.body.className = darkMode ? 'dark' : 'light';
+  }, [darkMode]);
+
   return (
     <html lang="en">
       <body>
-        <header style={{ padding: '1rem', background: '#eee' }}>
-          <div style={{ float: 'left' }}>Mitchell Bowell — Student No: 21610317</div>
-          <div style={{ float: 'right' }}>Assignment 1</div>
+        {/* Top Header */}
+        <header style={{ padding: '1rem', background: 'var(--header-footer-background)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div>Mitchell Bowell — Student No: 21610317</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <span>Assignment 1</span>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                padding: '0.5rem',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+              }}
+            >
+              {darkMode ? 'Light Mode' : 'Dark Mode'}
+            </button>
+          </div>
         </header>
 
-        <header style={{ padding: '1rem', background: '#eee' }}>
+        {/* Tabs Header */}
+        <header style={{ background: '#eee' }}>
           <div style={{ float: 'left', padding: '1rem' }}>example</div>
-          <nav style={{ padding: '1rem', background: '#ddd', textAlign: 'center'}}>
-          <a href="/" style={{ margin: '0 10px' }}>Home</a>
-          <a href="/about" style={{ margin: '0 10px' }}>About</a>
-          <a href="/tabs" style={{ margin: '0 10px' }}>Tabs</a>
-          <a href="/Hamburger Menu" style={{ margin: '0 10px' }}>Hamburger Menu</a>
-          <a href="/escape-room" style={{ margin: '0 10px' }}>Escape Room</a>
-          <a href="/coding-races" style={{ margin: '0 10px' }}>Coding Races</a>
-          <a href="/court-room" style={{ margin: '0 10px' }}>Court Room</a>
-        </nav>
+          <nav style={{ padding: '1rem', background: 'var(--nav-background)', textAlign: 'center' }}>
+            <a href="/" style={{ margin: '0 10px' }}>Home</a>
+            <a href="/about" style={{ margin: '0 10px' }}>About</a>
+            <a href="/tabs" style={{ margin: '0 10px' }}>Tabs</a>
+            <a href="/Hamburger Menu" style={{ margin: '0 10px' }}>Hamburger Menu</a>
+            <a href="/escape-room" style={{ margin: '0 10px' }}>Escape Room</a>
+            <a href="/coding-races" style={{ margin: '0 10px' }}>Coding Races</a>
+            <a href="/court-room" style={{ margin: '0 10px' }}>Court Room</a>
+          </nav>
         </header>
 
-
+        {/* Main content */}
         <main style={{ padding: '2rem', clear: 'both' }}>{children}</main>
 
-        <footer style={{ background: '#eee', padding: '1rem', marginTop: '2rem' }}>
-          &copy; {new Date().getFullYear()} Mitchell Bowell — Student No: 21610317
+        {/* Footer */}
+        <footer style={{ background: 'var(--header-footer-background)', padding: '1rem', marginTop: '2rem' }}>
+          {new Date().getFullYear()} Mitchell Bowell — Student No: 21610317
         </footer>
       </body>
     </html>
