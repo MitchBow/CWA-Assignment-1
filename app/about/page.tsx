@@ -6,8 +6,10 @@ export default function AboutPage() {
       <br/>
     <h2>All about us!</h2>
     <p>
-      Our company created this program has designed this page so that others are able to access multiple cool features, such as About, Tabs, Food Menu, Escape Room, Coding Races, and the Court Room. <br/>
-      We hope these programs are able to help our users achieve the service they need.  <br/>
+      Student name: Mitchell Bowell<br/>
+      Student number: 21610317<br/>
+      <br/>
+      Video guide:<br/>
     </p>
     </body>
     </div>
