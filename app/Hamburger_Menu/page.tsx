@@ -1,5 +1,6 @@
 export default function HamburgerMenuPage() {
   return (
+    <div><h1 style={{ textAlign: 'center', marginTop: '10px', marginBottom: '20px' }}>Menu</h1>
     <div
       style={{
         display: 'flex',
@@ -75,5 +76,5 @@ export default function HamburgerMenuPage() {
         />
       </div>
     </div>
-  );
+  </div>);
 }
