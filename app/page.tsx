@@ -35,7 +35,7 @@ export default function Home() {
     return text.replace(/[&<>"']/g, (char) => map[char]);
   }
 
-  // Indent each escaped line by 10 spaces for <p> content
+  // Indent each escaped line
   const escapedLines = input
     .split('\n')
     .map((line) => '          ' + escapeHTML(line));
@@ -90,6 +90,7 @@ ${escapedLines.join('\n')}
     setInput(tabs[index].content);
   };
 
+  //delete tab
   const deleteTab = (indexToDelete: number) => {
   const newTabs = tabs.filter((_, index) => index !== indexToDelete);
 
@@ -108,7 +109,7 @@ ${escapedLines.join('\n')}
     <div style={{ padding: '1rem', fontFamily: 'monospace' }}>
       <h2>Text to HTML Code Generator</h2>
 
-      {/* Tab navigation */}
+      //Tab navigation
       <div style={{ marginBottom: '0.5rem' }}>
         {tabs.map((tab, index) => (
           <div
@@ -134,7 +135,7 @@ ${escapedLines.join('\n')}
                 cursor: 'pointer',
               }}
             >
-              {tab.name}
+            {tab.name}
             </button>
             <button
               onClick={() => deleteTab(index)}
@@ -155,7 +156,7 @@ ${escapedLines.join('\n')}
       </div>
 
 
-      {/* New tab input */}
+      //New tab input 
       <div style={{ marginBottom: '1rem' }}>
         <input
           type="text"
@@ -184,7 +185,7 @@ ${escapedLines.join('\n')}
         </button>
       </div>
 
-      {/* Text Input */}
+      //Text Input 
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -192,7 +193,7 @@ ${escapedLines.join('\n')}
         style={{ width: '100%', fontFamily: 'monospace', padding: '0.5rem' }}
       />
 
-      {/* Copy and Output */}
+      //Copy and Output 
       <div style={{ marginTop: '1rem' }}>
         <button
           onClick={copyToClipboard}
