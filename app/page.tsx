@@ -90,6 +90,20 @@ ${escapedLines.join('\n')}
     setInput(tabs[index].content);
   };
 
+  const deleteTab = (indexToDelete: number) => {
+  const newTabs = tabs.filter((_, index) => index !== indexToDelete);
+
+    setTabs(newTabs);
+
+    // Update active tab index
+    if (activeTab === indexToDelete) {
+      setActiveTab(newTabs.length > 0 ? 0 : -1);
+      setInput(newTabs[0]?.content || '');
+    } else if (activeTab > indexToDelete) {
+      setActiveTab((prev) => prev - 1);
+    }
+  };
+
   return (
     <div style={{ padding: '1rem', fontFamily: 'monospace' }}>
       <h2>Text to HTML Code Generator</h2>
@@ -97,23 +111,49 @@ ${escapedLines.join('\n')}
       {/* Tab navigation */}
       <div style={{ marginBottom: '0.5rem' }}>
         {tabs.map((tab, index) => (
-          <button
+          <div
             key={index}
-            onClick={() => switchTab(index)}
             style={{
-              padding: '0.3rem 0.6rem',
-              marginRight: '0.3rem',
-              borderRadius: '5px',
-              border: '1px solid #ccc',
+              display: 'inline-flex',
+              alignItems: 'center',
+              marginRight: '0.5rem',
               backgroundColor: activeTab === index ? '#0070f3' : '#eee',
               color: activeTab === index ? '#fff' : '#000',
-              cursor: 'pointer',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+              overflow: 'hidden',
             }}
           >
-            {tab.name}
-          </button>
+            <button
+              onClick={() => switchTab(index)}
+              style={{
+                padding: '0.3rem 0.6rem',
+                border: 'none',
+                background: 'transparent',
+                color: 'inherit',
+                cursor: 'pointer',
+              }}
+            >
+              {tab.name}
+            </button>
+            <button
+              onClick={() => deleteTab(index)}
+              style={{
+                padding: '0.3rem',
+                border: 'none',
+                background: 'transparent',
+                color: 'red',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+              }}
+              title="Delete tab"
+            >
+              ❌
+            </button>
+          </div>
         ))}
       </div>
+
 
       {/* New tab input */}
       <div style={{ marginBottom: '1rem' }}>
