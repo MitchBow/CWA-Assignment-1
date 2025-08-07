@@ -55,20 +55,22 @@ export default function HamburgerMenuPage() {
           src="/images/burger1.jpg"
           alt="Chicken Burger"
           style={{
-            maxWidth: '100%',
-            height: '200px',
+            maxWidth: '200px',
+            height: '261px',
             borderRadius: '20px',
             marginBottom: '20px',
+            marginRight: '20px'            
           }}
         />
         <img
           src="/images/burger2.jpg"
           alt="BBQ Burger"
           style={{
-            maxWidth: '100%',
-            height: '200px',
+            maxWidth: '300px',
+            height: '261px',
             borderRadius: '20px',
             marginBottom: '20px',
+            marginRight: '20px'
           }}
         />
       </div>
