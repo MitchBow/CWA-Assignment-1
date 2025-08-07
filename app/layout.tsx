@@ -6,9 +6,26 @@ import React, { useState, useEffect } from 'react';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
 
+  // Load dark mode preference on initial mount
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode');
+    if (savedMode) {
+      const isDark = savedMode === 'true';
+      setDarkMode(isDark);
+      document.body.className = isDark ? 'dark' : 'light';
+    } else {
+      // default to light if nothing is saved
+      document.body.className = 'light';
+    }
+  }, []);
+
+  // Update body class and save to localStorage when darkMode changes
   useEffect(() => {
     document.body.className = darkMode ? 'dark' : 'light';
+    localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
+
+  const toggleDarkMode = () => setDarkMode(prev => !prev);
 
   return (
     <html lang="en">
