@@ -33,6 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Top Header */}
         <header style={{ padding: '1rem', background: 'var(--header-footer-background)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>Mitchell Bowell — Student No: 21610317</div>
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', }}>
+            <h1 id="title" style={{ margin: 0 }}>This is the Title</h1>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <span>Assignment 1</span>
             <button
@@ -51,7 +54,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Tabs Header */}
         <header style={{ background: '#eee' }}>
-          <div style={{ float: 'left', padding: '1rem' }}>Hello!</div>
           <nav style={{ padding: '1rem', background: 'var(--nav-background)', textAlign: 'center' }}>
             <a href="/" style={{ margin: '0 10px' }}>Home</a>
             <a href="/about" style={{ margin: '0 10px' }}>About</a>

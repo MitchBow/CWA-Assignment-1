@@ -3,7 +3,7 @@ export default function HamburgerMenuPage() {
     <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
       {/* Left Side: Menu Text */}
       <div style={{ flex: 1, marginRight: '150px' }}>
-        <h1>Hamburger Menu</h1>
+        <h1>Food Menu</h1>
 
         {/* Specials */}
         <h2><u>Specials</u></h2>
@@ -11,7 +11,7 @@ export default function HamburgerMenuPage() {
           $19.99 - hot honey chicken burger<br />
           $19.99 - hot honey chicken bites<br />
         </p>
-
+        <br />
         {/* Burgers */}
         <h2><u>Burgers</u></h2>
         <p>
@@ -20,7 +20,7 @@ export default function HamburgerMenuPage() {
           $16.50 - spicy beef burger<br />
           $15.00 - BBQ beef burger<br />
         </p>
-
+        <br />
         {/* Kebab */}
         <h2><u>Kebab</u></h2>
         <p>
@@ -28,7 +28,7 @@ export default function HamburgerMenuPage() {
           $14.50 - BBQ beef kebab<br />
           $16.50 - Mixed kebab<br />
         </p>
-
+        <br />
         {/* Sides */}
         <h2><u>Sides</u></h2>
         <p>
@@ -38,6 +38,7 @@ export default function HamburgerMenuPage() {
           $6.00 - 1.1L drink<br />
         </p>
       </div>
+      <br />
 
       {/* Images */}
       <div>      
