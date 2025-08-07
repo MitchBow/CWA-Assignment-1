@@ -15,6 +15,7 @@ export default function Home() {
       const parsed = JSON.parse(savedTabs);
       setTabs(parsed);
       setInput(parsed[0]?.content || '');
+      setNewTabName(parsed[0]?.name || '');
     }
   }, []);
 
@@ -22,6 +23,17 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('savedTabs', JSON.stringify(tabs));
   }, [tabs]);
+
+  // Sync input and newTabName when activeTab changes
+  useEffect(() => {
+    if (tabs[activeTab]) {
+      setInput(tabs[activeTab].content);
+      setNewTabName(tabs[activeTab].name);
+    } else {
+      setInput('');
+      setNewTabName('');
+    }
+  }, [activeTab, tabs]);
 
   // Escape HTML special chars to show safely inside <pre>
   function escapeHTML(text: string) {
@@ -87,22 +99,33 @@ ${escapedLines.join('\n')}
   // Switch between saved tabs
   const switchTab = (index: number) => {
     setActiveTab(index);
-    setInput(tabs[index].content);
   };
 
-  //delete tab
+  // Delete tab
   const deleteTab = (indexToDelete: number) => {
-  const newTabs = tabs.filter((_, index) => index !== indexToDelete);
-
+    const newTabs = tabs.filter((_, index) => index !== indexToDelete);
     setTabs(newTabs);
-
-    // Update active tab index
+    
     if (activeTab === indexToDelete) {
       setActiveTab(newTabs.length > 0 ? 0 : -1);
-      setInput(newTabs[0]?.content || '');
     } else if (activeTab > indexToDelete) {
       setActiveTab((prev) => prev - 1);
     }
+  };
+
+  // Rename current tab using newTabName input
+  const renameTab = () => {
+    if (!newTabName.trim()) return;
+    const updatedTabs = [...tabs];
+    updatedTabs[activeTab].name = newTabName.trim();
+    setTabs(updatedTabs);
+  };
+
+  // Update content of current tab using textarea input
+  const updateTabContent = () => {
+    const updatedTabs = [...tabs];
+    updatedTabs[activeTab].content = input;
+    setTabs(updatedTabs);
   };
 
   return (
@@ -135,7 +158,7 @@ ${escapedLines.join('\n')}
                 cursor: 'pointer',
               }}
             >
-            {tab.name}
+              {tab.name}
             </button>
             <button
               onClick={() => deleteTab(index)}
@@ -155,16 +178,16 @@ ${escapedLines.join('\n')}
         ))}
       </div>
 
-
-      //New tab input 
-      <div style={{ marginBottom: '1rem' }}>
+      //New tab name input and buttons
+      <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         <input
           type="text"
-          placeholder="New tab name"
+          placeholder="Tab name"
           value={newTabName}
           onChange={(e) => setNewTabName(e.target.value)}
           style={{
-            marginRight: '0.5rem',
+            flexGrow: 1,
+            minWidth: '200px',
             padding: '0.3rem',
             fontFamily: 'monospace',
           }}
@@ -181,7 +204,37 @@ ${escapedLines.join('\n')}
             fontWeight: 'bold',
           }}
         >
-          Save Tab
+          Add Tab
+        </button>
+        <button
+          onClick={renameTab}
+          disabled={activeTab === -1}
+          style={{
+            padding: '0.4rem 0.8rem',
+            cursor: activeTab === -1 ? 'not-allowed' : 'pointer',
+            borderRadius: '5px',
+            border: 'none',
+            backgroundColor: activeTab === -1 ? 'grey' : '#0070f3',
+            color: 'white',
+            fontWeight: 'bold',
+          }}
+        >
+          Rename Tab
+        </button>
+        <button
+          onClick={updateTabContent}
+          disabled={activeTab === -1}
+          style={{
+            padding: '0.4rem 0.8rem',
+            cursor: activeTab === -1 ? 'not-allowed' : 'pointer',
+            borderRadius: '5px',
+            border: 'none',
+            backgroundColor: activeTab === -1 ? 'grey' : '#ff9900',
+            color: 'white',
+            fontWeight: 'bold',
+          }}
+        >
+          Update Content
         </button>
       </div>
 
@@ -193,7 +246,7 @@ ${escapedLines.join('\n')}
         style={{ width: '100%', fontFamily: 'monospace', padding: '0.5rem' }}
       />
 
-      //Copy and Output 
+      //Copy and Output
       <div style={{ marginTop: '1rem' }}>
         <button
           onClick={copyToClipboard}
