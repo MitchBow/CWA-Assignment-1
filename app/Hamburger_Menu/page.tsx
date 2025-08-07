@@ -1,9 +1,16 @@
 export default function HamburgerMenuPage() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '20px' }}>
-      {/* Left Side: Menu Text */}
-      <div style={{ flex: 1, marginRight: '150px' }}>
-        <h1>Food Menu</h1>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        padding: '20px',
+      }}
+    >
+      {/* Left Half of Menu */}
+      <div style={{ flex: 1, paddingRight: '40px', marginTop: '2%' }}>
+       
 
         {/* Specials */}
         <h2><u>Specials</u></h2>
@@ -20,7 +27,10 @@ export default function HamburgerMenuPage() {
           $16.50 - spicy beef burger<br />
           $15.00 - BBQ beef burger<br />
         </p>
-        <br />
+      </div>
+
+      {/* Center Half of Menu */}
+      <div style={{ flex: 1, textAlign: 'left', padding: '0 40px', marginTop: '2%' }}>
         {/* Kebab */}
         <h2><u>Kebab</u></h2>
         <p>
@@ -38,19 +48,28 @@ export default function HamburgerMenuPage() {
           $6.00 - 1.1L drink<br />
         </p>
       </div>
-      <br />
 
       {/* Images */}
-      <div>      
-        <img 
-          src="/images/burger1.jpg" 
-          alt="Chicken Burger" 
-          style={{ maxWidth: '500px', height: '400px', borderRadius: '20px', marginRight: '20px', marginBottom: '20px' }} 
+      <div style={{ flex: 1, textAlign: 'right' }}>
+        <img
+          src="/images/burger1.jpg"
+          alt="Chicken Burger"
+          style={{
+            maxWidth: '100%',
+            height: '200px',
+            borderRadius: '20px',
+            marginBottom: '20px',
+          }}
         />
-        <img 
-          src="/images/burger2.jpg" 
-          alt="BBQ Burger" 
-          style={{ maxWidth: '500px', height: '400px', borderRadius: '20px', marginRight: '20px', marginBottom: '20px' }} 
+        <img
+          src="/images/burger2.jpg"
+          alt="BBQ Burger"
+          style={{
+            maxWidth: '100%',
+            height: '200px',
+            borderRadius: '20px',
+            marginBottom: '20px',
+          }}
         />
       </div>
     </div>
