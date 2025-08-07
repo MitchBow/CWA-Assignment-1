@@ -10,6 +10,10 @@ export default function AboutPage() {
       Student number: 21610317<br/>
       <br/>
       Video guide:<br/>
+      <video width="640" height="360" controls>
+        <source src="/videos/walkthrough.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
     </p>
     </body>
     </div>
