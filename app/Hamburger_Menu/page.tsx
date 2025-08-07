@@ -15,17 +15,17 @@ export default function HamburgerMenuPage() {
         {/* Specials */}
         <h2><u>Specials</u></h2>
         <p>
-          hot honey chicken burger ------ $19.99<br />
-          hot honey chicken bites -------- $18.00<br />
+          hot honey chicken burger - $19.99<br />
+          hot honey chicken bites - $18.00<br />
         </p>
         <br />
         {/* Burgers */}
         <h2><u>Burgers</u></h2>
         <p>
-          crunchy chicken burger -------- $16.90<br />
-          micro chicken burger ----------- $14.50<br />
-          spicy beef burger ---------------- $16.50 <br />
-          BBQ beef burger ---------------- $15.00<br />
+          crunchy chicken burger - $16.90<br />
+          micro chicken burger - $14.50<br />
+          spicy beef burger - $16.50 <br />
+          BBQ beef burger - $15.00<br />
         </p>
       </div>
 
@@ -34,18 +34,18 @@ export default function HamburgerMenuPage() {
         {/* Kebab */}
         <h2><u>Kebab</u></h2>
         <p>
-          crunchy chicken kebab -------- $16.90<br />
-          BBQ beef kebab ---------------- $14.50<br />
-          Mixed kebab --------------------- $16.50<br />
+          crunchy chicken kebab - $16.90<br />
+          BBQ beef kebab - $14.50<br />
+          Mixed kebab - $16.50<br />
         </p>
         <br />
         {/* Sides */}
         <h2><u>Sides</u></h2>
         <p>
-          large Chips + 1.1L drink ------- $9.99<br />
-          Small chips ----------------------- $3.50<br />
-          Large chips -----------------------  $5.99<br />
-          1.1L drink ------------------------- $6.00<br />
+          large Chips + 1.1L drink - $9.99<br />
+          Small chips - $3.50<br />
+          Large chips -  $5.99<br />
+          1.1L drink - $6.00<br />
         </p>
       </div>
 
