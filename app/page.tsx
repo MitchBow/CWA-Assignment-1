@@ -1,9 +1,27 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [input, setInput] = useState('Hello World\nThis is on a new line');
+  const [tabs, setTabs] = useState<{ name: string; content: string }[]>([]);
+  const [activeTab, setActiveTab] = useState(0);
+  const [newTabName, setNewTabName] = useState('');
+
+  // Load tabs from localStorage on first load
+  useEffect(() => {
+    const savedTabs = localStorage.getItem('savedTabs');
+    if (savedTabs) {
+      const parsed = JSON.parse(savedTabs);
+      setTabs(parsed);
+      setInput(parsed[0]?.content || '');
+    }
+  }, []);
+
+  // Save tabs to localStorage on any change
+  useEffect(() => {
+    localStorage.setItem('savedTabs', JSON.stringify(tabs));
+  }, [tabs]);
 
   // Escape HTML special chars to show safely inside <pre>
   function escapeHTML(text: string) {
@@ -17,7 +35,7 @@ export default function Home() {
     return text.replace(/[&<>"']/g, (char) => map[char]);
   }
 
-  // Indent each escaped line by 10 spaces for <p> content
+  // Indent each escaped line
   const escapedLines = input
     .split('\n')
     .map((line) => '          ' + escapeHTML(line));
@@ -37,31 +55,137 @@ ${escapedLines.join('\n')}
 `.trim();
 
   // Copy to clipboard handler
- const copyToClipboard = () => {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(outputCode)
-      .then(() => alert('Code copied to clipboard!'))
-      .catch(() => alert('Failed to copy!'));
-  } else {
-    // Fallback for older browsers
-    try {
-      const textArea = document.createElement('textarea');
-      textArea.value = outputCode;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      alert('Code copied to clipboard!');
-    } catch {
-      alert('Failed to copy!');
+  const copyToClipboard = () => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(outputCode)
+        .then(() => alert('Code copied to clipboard!'))
+        .catch(() => alert('Failed to copy!'));
+    } else {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = outputCode;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Code copied to clipboard!');
+      } catch {
+        alert('Failed to copy!');
+      }
     }
-  }
-};
+  };
 
+  // Add new tab and save input
+  const addTab = () => {
+    if (!newTabName.trim()) return;
+    const newTabs = [...tabs, { name: newTabName.trim(), content: input }];
+    setTabs(newTabs);
+    setActiveTab(newTabs.length - 1);
+    setNewTabName('');
+  };
+
+  // Switch between saved tabs
+  const switchTab = (index: number) => {
+    setActiveTab(index);
+    setInput(tabs[index].content);
+  };
+
+  //delete tab
+  const deleteTab = (indexToDelete: number) => {
+  const newTabs = tabs.filter((_, index) => index !== indexToDelete);
+
+    setTabs(newTabs);
+
+    // Update active tab index
+    if (activeTab === indexToDelete) {
+      setActiveTab(newTabs.length > 0 ? 0 : -1);
+      setInput(newTabs[0]?.content || '');
+    } else if (activeTab > indexToDelete) {
+      setActiveTab((prev) => prev - 1);
+    }
+  };
 
   return (
     <div style={{ padding: '1rem', fontFamily: 'monospace' }}>
       <h2>Text to HTML Code Generator</h2>
+
+      //Tab navigation
+      <div style={{ marginBottom: '0.5rem' }}>
+        {tabs.map((tab, index) => (
+          <div
+            key={index}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              marginRight: '0.5rem',
+              backgroundColor: activeTab === index ? '#0070f3' : '#eee',
+              color: activeTab === index ? '#fff' : '#000',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+              overflow: 'hidden',
+            }}
+          >
+            <button
+              onClick={() => switchTab(index)}
+              style={{
+                padding: '0.3rem 0.6rem',
+                border: 'none',
+                background: 'transparent',
+                color: 'inherit',
+                cursor: 'pointer',
+              }}
+            >
+            {tab.name}
+            </button>
+            <button
+              onClick={() => deleteTab(index)}
+              style={{
+                padding: '0.3rem',
+                border: 'none',
+                background: 'transparent',
+                color: 'red',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+              }}
+              title="Delete tab"
+            >
+              ❌
+            </button>
+          </div>
+        ))}
+      </div>
+
+
+      //New tab input 
+      <div style={{ marginBottom: '1rem' }}>
+        <input
+          type="text"
+          placeholder="New tab name"
+          value={newTabName}
+          onChange={(e) => setNewTabName(e.target.value)}
+          style={{
+            marginRight: '0.5rem',
+            padding: '0.3rem',
+            fontFamily: 'monospace',
+          }}
+        />
+        <button
+          onClick={addTab}
+          style={{
+            padding: '0.4rem 0.8rem',
+            cursor: 'pointer',
+            borderRadius: '5px',
+            border: 'none',
+            backgroundColor: 'green',
+            color: 'white',
+            fontWeight: 'bold',
+          }}
+        >
+          Save Tab
+        </button>
+      </div>
+
+      //Text Input 
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -69,6 +193,7 @@ ${escapedLines.join('\n')}
         style={{ width: '100%', fontFamily: 'monospace', padding: '0.5rem' }}
       />
 
+      //Copy and Output 
       <div style={{ marginTop: '1rem' }}>
         <button
           onClick={copyToClipboard}
