@@ -35,36 +35,29 @@ export default function Home() {
     }
   }, [activeTab, tabs]);
 
-  // Escape HTML special chars to show safely inside <pre>
-  function escapeHTML(text: string) {
-    const map: { [key: string]: string } = {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#039;',
-    };
-    return text.replace(/[&<>"']/g, (char) => map[char]);
-  }
-
-  // Indent each escaped line
-  const escapedLines = input
-    .split('\n')
-    .map((line) => '          ' + escapeHTML(line));
-
+  //HTML based output
   const outputCode = `
-export default function Page() {
-  return (
-    <div>
-      <body>
-        <p>
-${escapedLines.join('\n')}
-        </p>
-      </body>
-    </div>
-  );
-}
-`.trim();
+  <!DOCTYPE html>
+<html>
+  <body>
+${tabs
+  .map((tab) => {
+    const tagName = tab.name
+    const escapedLines = tab.content
+      .split('\n')
+      .map(line =>line.trimEnd())
+      .join('\n');
+    return `    <${tagName}>\n      ${escapedLines}\n    </${tagName}>`;
+  })
+  .join('\n')}
+  </body>
+</html>
+  `.trim();
+
+
+
+
+
 
   // Copy to clipboard handler
   const copyToClipboard = () => {
