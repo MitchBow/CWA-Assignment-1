@@ -8,10 +8,10 @@ export default function AboutPage() {
     <p>
       Student name: Mitchell Bowell<br/>
       Student number: 21610317<br/>
-      <br/>
-      Video guide:<br/>
+      <br/></p>
+      <h3>Video guide:</h3><br/><p>
       <video width="640" height="360" controls>
-        <source src="/videos/walkthrough.mp4" type="video/mp4" />
+        <source src="/Video/sample.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </p>
