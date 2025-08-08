@@ -31,39 +31,79 @@ export default function HamburgerMenuPage() {
         <div style={{ flex: 1, paddingRight: '40px', marginTop: '2%' }}>
           {/* Specials */}
           <h2><u>Specials</u></h2>
-          <p>
-            Hot Honey Chicken Burger - $19.99<br />
-            Hot Honey Chicken Bites - $18.00<br />
-          </p>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Hot Honey Chicken Burger</span>
+              <span>$19.99</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Hot Honey Chicken Bites</span>
+              <span>$18.00</span>
+            </div>
+          </div>
           <br />
+
           {/* Burgers */}
           <h2><u>Beef Burgers</u></h2>
-          <p>
-            Plain Beef Burger - $16.90<br />
-            Micro Beeg Burger - $14.50<br />
-            Spicy Beef Burger - $16.50 <br />
-            BBQ Beef Burger - $15.00<br />
-          </p>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Plain Beef Burger</span>
+              <span>$16.90</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Micro Beeg Burger</span>
+              <span>$14.50</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Spicy Beef Burger</span>
+              <span>$16.50</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>BBQ Beef Burger</span>
+              <span>$15.00</span>
+            </div>
+          </div>
         </div>
 
         {/* Center Half of Menu */}
         <div style={{ flex: 1, textAlign: 'left', padding: '0 40px', marginTop: '2%' }}>
-          {/* Kebab */}
-          <h2><u>Chicken Burger</u></h2>
-          <p>
-            Crunchy Chicken Burger - $16.90<br />
-            BBQ Chicken Burger - $14.50<br />
-            Spicey Chicken Burger - $16.50<br />
-          </p>
+          {/* Chicken Burgers */}
+          <h2><u>Chicken Burgers</u></h2>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Crunchy Chicken Burger</span>
+              <span>$16.90</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>BBQ Chicken Burger</span>
+              <span>$14.50</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Spicy Chicken Burger</span>
+              <span>$16.50</span>
+            </div>
+          </div>
           <br />
           {/* Sides */}
           <h2><u>Sides</u></h2>
-          <p>
-            large Chips + 1.1L drink - $9.99<br />
-            Small Chips - $3.50<br />
-            Large Chips -  $5.99<br />
-            1.1L Drink - $6.00<br />
-          </p>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Large Chips + 1.1L Drink</span>
+              <span>$9.99</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Small Chips</span>
+              <span>$3.50</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Large Chips</span>
+              <span>$5.99</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>1.1L Drink</span>
+              <span>$6.00</span>
+            </div>
+          </div>
         </div>
 
         {/* Images */}
