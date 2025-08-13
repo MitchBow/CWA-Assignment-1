@@ -4,7 +4,7 @@ export default function AboutPage() {
     <body>
       <h1>About</h1>
       <br/>
-    <h2>All about us!</h2>
+    <h2>My Information:</h2>
     <p>
       Student name: Mitchell Bowell<br/>
       Student number: 21610317<br/>
