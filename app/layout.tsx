@@ -57,7 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav style={{ padding: '1rem', background: 'var(--nav-background)', textAlign: 'center' }}>
             <a href="/" style={{ margin: '0 10px' }}>Home</a>
             <a href="/about" style={{ margin: '0 10px' }}>About</a>
-            <a href="/Hamburger_Menu" style={{ margin: '0 10px' }}>Food Menu</a>
             <a href="/escape-room" style={{ margin: '0 10px' }}>Escape Room</a>
             <a href="/coding-races" style={{ margin: '0 10px' }}>Coding Races</a>
             <a href="/court-room" style={{ margin: '0 10px' }}>Court Room</a>
