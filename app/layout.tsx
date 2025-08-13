@@ -2,7 +2,6 @@
 
 import './globals.css';
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link'; // If you’re using Next.js, otherwise use <a>
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
 
-  // Close menu when navigating (optional)
   const handleLinkClick = () => {
     setMenuOpen(false);
   };
@@ -61,15 +59,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               onClick={() => setMenuOpen((prev) => !prev)}
               aria-label="Toggle menu"
               style={{
-                fontSize: '1.5rem',
-                cursor: 'pointer',
                 background: 'none',
                 border: 'none',
                 userSelect: 'none',
+                padding: 0,
+                cursor: 'pointer',
               }}
             >
-              {/* Burger icon */}
-              ☰
+              <div className={`burger ${menuOpen ? 'open' : ''}`}>
+                <span />
+                <span />
+                <span />
+              </div>
             </button>
             <button
               onClick={() => setDarkMode((prev) => !prev)}
@@ -118,7 +119,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         textDecoration: 'none',
                         cursor: 'pointer',
                       }}
-                      onMouseDown={e => e.preventDefault()} // Prevent focus loss
+                      onMouseDown={(e) => e.preventDefault()} // Prevent focus loss
                     >
                       {label}
                     </a>
@@ -142,6 +143,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           {new Date().getFullYear()} Mitchell Bowell — Student No: 21610317
         </footer>
+
+        <style>{`
+          .burger {
+            width: 24px;
+            height: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .burger span {
+            display: block;
+            height: 3px;
+            background: currentColor;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+          }
+          .burger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+          }
+          .burger.open span:nth-child(2) {
+            opacity: 0;
+          }
+          .burger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+          }
+        `}</style>
       </body>
     </html>
   );
