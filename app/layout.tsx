@@ -20,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const [menuOpen, setMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState('');
 
-
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode');
     if (savedMode) {
@@ -37,11 +36,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
 
-  // Set cookie with current page path on mount for testing
+  // On first load, redirect to saved page from cookie if different
   useEffect(() => {
-    const path = window.location.pathname;
-    setCookie('currentPage', path, 7);
-    setCurrentPage(path);
+    const savedPage = getCookie('currentPage');
+    const currentPath = window.location.pathname;
+
+    if (savedPage && savedPage !== currentPath) {
+      window.location.pathname = savedPage;
+    } else {
+      setCookie('currentPage', currentPath, 7);
+      setCurrentPage(currentPath);
+    }
   }, []);
 
   const handleLinkClick = () => {
@@ -132,7 +137,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li key={href}>
                     <a
                       href={href}
-                      onClick={handleLinkClick}
+                      onClick={(e) => {
+                        setCookie('currentPage', href, 7);
+                        setCurrentPage(href);
+                        handleLinkClick();
+                      }}
                       style={{
                         display: 'block',
                         padding: '0.5rem 1rem',
