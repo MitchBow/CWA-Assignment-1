@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [input, setInput] = useState('Hello World\nThis is on a new line');
+  const [input, setInput] = useState('');
   const [tabs, setTabs] = useState<{ name: string; style: string; content: string }[]>([]);
   const [activeTab, setActiveTab] = useState(0);
   const [newTabName, setNewTabName] = useState('');
