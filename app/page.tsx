@@ -222,7 +222,7 @@ export default function Home() {
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         <input
           type="text"
-          placeholder="Tab HTML tag"
+          placeholder="Tab name"
           value={newTabName}
           onChange={(e) => setNewTabName(e.target.value)}
           style={{
@@ -234,7 +234,7 @@ export default function Home() {
         />
         <input
           type="text"
-          placeholder="Inline style (e.g., color:red;)"
+          placeholder="Inline style (e.g., color: black; font-size: 14px;)"
           value={newTabStyle}
           onChange={(e) => setNewTabStyle(e.target.value)}
           style={{
@@ -262,6 +262,7 @@ export default function Home() {
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        placeholder="Page text"
         rows={6}
         style={{ width: '100%', fontFamily: 'monospace', padding: '0.5rem' }}
       />
