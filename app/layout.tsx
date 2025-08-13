@@ -3,9 +3,22 @@
 import './globals.css';
 import React, { useState, useEffect } from 'react';
 
+function setCookie(name: string, value: string, days: number) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+}
+
+function getCookie(name: string) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, '');
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
 
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode');
@@ -22,6 +35,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     document.body.className = darkMode ? 'dark' : 'light';
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
+
+  // On first load, redirect to saved page from cookie if different
+  useEffect(() => {
+    const savedPage = getCookie('currentPage');
+    const currentPath = window.location.pathname;
+
+    if (savedPage && savedPage !== currentPath) {
+      window.location.pathname = savedPage;
+    } else {
+      setCookie('currentPage', currentPath, 7);
+      setCurrentPage(currentPath);
+    }
+  }, []);
 
   const handleLinkClick = () => {
     setMenuOpen(false);
@@ -111,7 +137,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <li key={href}>
                     <a
                       href={href}
-                      onClick={handleLinkClick}
+                      onClick={(e) => {
+                        setCookie('currentPage', href, 7);
+                        setCurrentPage(href);
+                        handleLinkClick();
+                      }}
                       style={{
                         display: 'block',
                         padding: '0.5rem 1rem',
@@ -129,6 +159,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           )}
         </header>
+
+        {/* Display current page from cookie */}
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '0.5rem',
+            fontStyle: 'italic',
+            fontSize: '0.9rem',
+            color: '#666',
+          }}
+        >
+          Current page from cookie: {currentPage || 'unknown'}
+        </div>
 
         {/* Main content */}
         <main style={{ padding: '2rem', clear: 'both' }}>{children}</main>
