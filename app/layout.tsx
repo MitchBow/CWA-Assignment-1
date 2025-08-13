@@ -3,9 +3,23 @@
 import './globals.css';
 import React, { useState, useEffect } from 'react';
 
+function setCookie(name: string, value: string, days: number) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+}
+
+function getCookie(name: string) {
+  return document.cookie.split('; ').reduce((r, v) => {
+    const parts = v.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, '');
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [darkMode, setDarkMode] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState('');
+
 
   useEffect(() => {
     const savedMode = localStorage.getItem('darkMode');
@@ -22,6 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     document.body.className = darkMode ? 'dark' : 'light';
     localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
+
+  // Set cookie with current page path on mount for testing
+  useEffect(() => {
+    const path = window.location.pathname;
+    setCookie('currentPage', path, 7);
+    setCurrentPage(path);
+  }, []);
 
   const handleLinkClick = () => {
     setMenuOpen(false);
@@ -129,6 +150,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </nav>
           )}
         </header>
+
+        {/* Display current page from cookie */}
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '0.5rem',
+            fontStyle: 'italic',
+            fontSize: '0.9rem',
+            color: '#666',
+          }}
+        >
+          Current page from cookie: {currentPage || 'unknown'}
+        </div>
 
         {/* Main content */}
         <main style={{ padding: '2rem', clear: 'both' }}>{children}</main>
