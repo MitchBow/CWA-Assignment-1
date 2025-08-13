@@ -160,19 +160,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           )}
         </header>
 
-        {/* Display current page from cookie */}
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: '0.5rem',
-            fontStyle: 'italic',
-            fontSize: '0.9rem',
-            color: '#666',
-          }}
-        >
-          Current page from cookie: {currentPage || 'unknown'}
-        </div>
-
         {/* Main content */}
         <main style={{ padding: '2rem', clear: 'both' }}>{children}</main>
 
