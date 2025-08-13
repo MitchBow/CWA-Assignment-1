@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [input, setInput] = useState('Hello World\nThis is on a new line');
-  const [tabs, setTabs] = useState<{ name: string; content: string }[]>([]);
+  const [tabs, setTabs] = useState<{ name: string; style: string; content: string }[]>([]);
   const [activeTab, setActiveTab] = useState(0);
   const [newTabName, setNewTabName] = useState('');
+  const [newTabStyle, setNewTabStyle] = useState('');
 
   // Load tabs from localStorage on first load
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function Home() {
       setTabs(parsed);
       setInput(parsed[0]?.content || '');
       setNewTabName(parsed[0]?.name || '');
+      setNewTabStyle(parsed[0]?.style || '');
     }
   }, []);
 
@@ -24,40 +26,38 @@ export default function Home() {
     localStorage.setItem('savedTabs', JSON.stringify(tabs));
   }, [tabs]);
 
-  // Sync input and newTabName when activeTab changes
+  // Sync active tab data to inputs
   useEffect(() => {
     if (tabs[activeTab]) {
       setInput(tabs[activeTab].content);
       setNewTabName(tabs[activeTab].name);
+      setNewTabStyle(tabs[activeTab].style);
     } else {
       setInput('');
       setNewTabName('');
+      setNewTabStyle('');
     }
   }, [activeTab, tabs]);
 
-  //HTML based output
+  // HTML output generation
   const outputCode = `
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <body>
 ${tabs
   .map((tab) => {
-    const tagName = tab.name
-    const escapedLines = tab.content
+    const tagName = tab.name || 'div';
+    const styleAttr = tab.style ? ` style="${tab.style}"` : '';
+    const escapedContent = tab.content
       .split('\n')
-      .map(line =>line.trimEnd())
+      .map(line => line.trimEnd())
       .join('\n');
-    return `    <${tagName}>\n      ${escapedLines}\n    </${tagName}>`;
+    return `    <${tagName}${styleAttr}>\n      ${escapedContent}\n    </${tagName}>`;
   })
   .join('\n')}
   </body>
 </html>
   `.trim();
-
-
-
-
-
 
   // Copy to clipboard handler
   const copyToClipboard = () => {
@@ -80,16 +80,20 @@ ${tabs
     }
   };
 
-  // Add new tab and save input
+  // Add new tab
   const addTab = () => {
     if (!newTabName.trim()) return;
-    const newTabs = [...tabs, { name: newTabName.trim(), content: input }];
+    const newTabs = [
+      ...tabs,
+      { name: newTabName.trim(), style: newTabStyle.trim(), content: input }
+    ];
     setTabs(newTabs);
     setActiveTab(newTabs.length - 1);
     setNewTabName('');
+    setNewTabStyle('');
   };
 
-  // Switch between saved tabs
+  // Switch tab
   const switchTab = (index: number) => {
     setActiveTab(index);
   };
@@ -98,7 +102,7 @@ ${tabs
   const deleteTab = (indexToDelete: number) => {
     const newTabs = tabs.filter((_, index) => index !== indexToDelete);
     setTabs(newTabs);
-    
+
     if (activeTab === indexToDelete) {
       setActiveTab(newTabs.length > 0 ? 0 : -1);
     } else if (activeTab > indexToDelete) {
@@ -106,7 +110,7 @@ ${tabs
     }
   };
 
-  // Rename current tab using newTabName input
+  // Rename tab
   const renameTab = () => {
     if (!newTabName.trim()) return;
     const updatedTabs = [...tabs];
@@ -114,7 +118,14 @@ ${tabs
     setTabs(updatedTabs);
   };
 
-  // Update content of current tab using textarea input
+  // Update style
+  const updateTabStyle = () => {
+    const updatedTabs = [...tabs];
+    updatedTabs[activeTab].style = newTabStyle.trim();
+    setTabs(updatedTabs);
+  };
+
+  // Update content
   const updateTabContent = () => {
     const updatedTabs = [...tabs];
     updatedTabs[activeTab].content = input;
@@ -125,7 +136,7 @@ ${tabs
     <div style={{ padding: '1rem', fontFamily: 'monospace' }}>
       <h2>Text to HTML Code Generator</h2>
 
-      //Tab navigation
+      {/* Tab Navigation */}
       <div style={{ marginBottom: '0.5rem' }}>
         {tabs.map((tab, index) => (
           <div
@@ -171,13 +182,25 @@ ${tabs
         ))}
       </div>
 
-      //New tab name input and buttons
+      {/* New tab inputs */}
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         <input
           type="text"
-          placeholder="Tab name"
+          placeholder="Tab HTML tag"
           value={newTabName}
           onChange={(e) => setNewTabName(e.target.value)}
+          style={{
+            flexGrow: 1,
+            minWidth: '150px',
+            padding: '0.3rem',
+            fontFamily: 'monospace',
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Inline style (e.g., color:red;)"
+          value={newTabStyle}
+          onChange={(e) => setNewTabStyle(e.target.value)}
           style={{
             flexGrow: 1,
             minWidth: '200px',
@@ -185,53 +208,21 @@ ${tabs
             fontFamily: 'monospace',
           }}
         />
-        <button
-          onClick={addTab}
-          style={{
-            padding: '0.4rem 0.8rem',
-            cursor: 'pointer',
-            borderRadius: '5px',
-            border: 'none',
-            backgroundColor: 'green',
-            color: 'white',
-            fontWeight: 'bold',
-          }}
-        >
+        <button onClick={addTab} style={{ backgroundColor: 'green', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '5px', fontWeight: 'bold', border: 'none' }}>
           Add Tab
         </button>
-        <button
-          onClick={renameTab}
-          disabled={activeTab === -1}
-          style={{
-            padding: '0.4rem 0.8rem',
-            cursor: activeTab === -1 ? 'not-allowed' : 'pointer',
-            borderRadius: '5px',
-            border: 'none',
-            backgroundColor: activeTab === -1 ? 'grey' : '#0070f3',
-            color: 'white',
-            fontWeight: 'bold',
-          }}
-        >
-          Rename Tab
+        <button onClick={renameTab} disabled={activeTab === -1} style={{ backgroundColor: '#0070f3', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '5px', fontWeight: 'bold', border: 'none' }}>
+          Rename Tag
         </button>
-        <button
-          onClick={updateTabContent}
-          disabled={activeTab === -1}
-          style={{
-            padding: '0.4rem 0.8rem',
-            cursor: activeTab === -1 ? 'not-allowed' : 'pointer',
-            borderRadius: '5px',
-            border: 'none',
-            backgroundColor: activeTab === -1 ? 'grey' : '#ff9900',
-            color: 'white',
-            fontWeight: 'bold',
-          }}
-        >
+        <button onClick={updateTabStyle} disabled={activeTab === -1} style={{ backgroundColor: '#aa00ff', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '5px', fontWeight: 'bold', border: 'none' }}>
+          Update Style
+        </button>
+        <button onClick={updateTabContent} disabled={activeTab === -1} style={{ backgroundColor: '#ff9900', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '5px', fontWeight: 'bold', border: 'none' }}>
           Update Content
         </button>
       </div>
 
-      //Text Input 
+      {/* Text Input */}
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -239,7 +230,7 @@ ${tabs
         style={{ width: '100%', fontFamily: 'monospace', padding: '0.5rem' }}
       />
 
-      //Copy and Output
+      {/* Copy & Output */}
       <div style={{ marginTop: '1rem' }}>
         <button
           onClick={copyToClipboard}
