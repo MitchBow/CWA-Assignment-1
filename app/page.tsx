@@ -39,25 +39,61 @@ export default function Home() {
     }
   }, [activeTab, tabs]);
 
+
   // HTML output generation
   const outputCode = `
-<!DOCTYPE html>
-<html>
-  <body>
-${tabs
-  .map((tab) => {
-    const tagName = tab.name || 'div';
-    const styleAttr = tab.style ? ` style="${tab.style}"` : '';
-    const escapedContent = tab.content
-      .split('\n')
-      .map(line => line.trimEnd())
-      .join('\n');
-    return `    <${tagName}${styleAttr}>\n      ${escapedContent}\n    </${tagName}>`;
-  })
-  .join('\n')}
-  </body>
-</html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        .tab-buttons {
+          margin-bottom: 1rem;
+        }
+        .tab-buttons button {
+          margin-right: 5px;
+          padding: 0.4rem 0.8rem;
+          cursor: pointer;
+        }
+        .tab-content {
+          border: 1px solid #ccc;
+          padding: 1rem;
+          min-height: 100px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="tab-buttons">
+  ${tabs
+    .map((tab, index) => {
+      return `      <button onclick="showTab(${index})">${tab.name}</button>`;
+    })
+    .join('\n')}
+      </div>
+      <div id="tabContent" class="tab-content"></div>
+
+      <script>
+        const tabData = ${JSON.stringify(
+          tabs.map(tab => ({
+            content: tab.content,
+            style: tab.style
+          }))
+        )};
+
+        function showTab(index) {
+          const data = tabData[index];
+          document.getElementById('tabContent').innerHTML = 
+            '<div style="' + data.style + '">' + data.content.replace(/\\n/g, '<br>') + '</div>';
+        }
+
+        // Show first tab by default if available
+        if (tabData.length > 0) {
+          showTab(0);
+        }
+      </script>
+    </body>
+  </html>
   `.trim();
+
 
   // Copy to clipboard handler
   const copyToClipboard = () => {
