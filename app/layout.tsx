@@ -190,7 +190,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             transition: all 0.3s ease;
           }
           .burger.open span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+            transform: rotate(45deg) translate(6px, 6px);
           }
           .burger.open span:nth-child(2) {
             opacity: 0;
