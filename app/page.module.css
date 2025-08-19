@@ -165,3 +165,11 @@ a.secondary {
     filter: invert();
   }
 }
+
+body.light {
+  --burger-color: #000;
+}
+
+body.dark {
+  --burger-color: #fff;
+}

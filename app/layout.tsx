@@ -181,14 +181,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            
           }
           .burger span {
             display: block;
             height: 3px;
-            background: currentColor;
+            background: var(--burger-color);
             border-radius: 2px;
             transition: all 0.3s ease;
           }
+
+          body.light .burger span {
+            background: #000; /* Black for visibility on light bg */
+          }
+
+          /* Dark mode */
+          body.dark .burger span {
+            background: #fff; /* White for visibility on dark bg */
+          }
+            
           .burger.open span:nth-child(1) {
             transform: rotate(45deg) translate(6px, 6px);
           }
