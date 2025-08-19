@@ -171,7 +171,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             marginTop: '2rem',
           }}
         >
-          {new Date().getFullYear()} Mitchell Bowell — Student No: 21610317
+          {new Date().getFullYear()}- © - Mitchell Bowell — Student No: 21610317
         </footer>
 
         <style>{`
