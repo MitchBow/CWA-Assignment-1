@@ -44,32 +44,16 @@ export default function Home() {
   const outputCode = `
   <!DOCTYPE html>
   <html>
-    <head>
-      <style>
-        .tab-buttons {
-          margin-bottom: 1rem;
-        }
-        .tab-buttons button {
-          margin-right: 5px;
-          padding: 0.4rem 0.8rem;
-          cursor: pointer;
-        }
-        .tab-content {
-          border: 1px solid #ccc;
-          padding: 1rem;
-          min-height: 100px;
-        }
-      </style>
-    </head>
+    <head></head>
     <body>
-      <div class="tab-buttons">
+      <div class="tab-buttons" style="margin-bottom: 1rem;">
   ${tabs
     .map((tab, index) => {
-      return `      <button onclick="showTab(${index})">${tab.name}</button>`;
+      return `      <button onclick="showTab(${index})" style="margin-right: 5px; padding: 0.4rem 0.8rem; cursor: pointer;">${tab.name}</button>`;
     })
     .join('\n')}
       </div>
-      <div id="tabContent" class="tab-content"></div>
+      <div id="tabContent" class="tab-content" style="border: 1px solid #ccc; padding: 1rem; min-height: 100px;"></div>
 
       <script>
         const tabData = ${JSON.stringify(
@@ -93,6 +77,7 @@ export default function Home() {
     </body>
   </html>
   `.trim();
+
 
 
   // Copy to clipboard handler
