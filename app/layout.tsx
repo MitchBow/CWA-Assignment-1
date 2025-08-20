@@ -64,7 +64,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            position: 'relative',
+            position: 'fixed',  
+            top: 0,             
+            left: 0,
+            width: '100%',      
+            zIndex: 1000,       
           }}
         >
           <div>Mitchell Bowell — Student No: 21610317</div>
@@ -76,9 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               pointerEvents: 'none',
             }}
           >
-            <h1 id="title" style={{ margin: 0 }}>
-              Assignment 1
-            </h1>
+            <h1 id="title" style={{ margin: 0 }}>Assignment 1</h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <button
@@ -110,6 +112,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {darkMode ? 'Light Mode' : 'Dark Mode'}
             </button>
           </div>
+
+
 
           {/* Burger menu dropdown/sidebar */}
           {menuOpen && (
@@ -168,7 +172,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           style={{
             background: 'var(--header-footer-background)',
             padding: '1rem',
-            marginTop: '2rem',
+            position: 'fixed',   
+            bottom: 0,           
+            left: 0,             
+            width: '100%',       
           }}
         >
           {new Date().getFullYear()} - © - Mitchell Bowell — Student No: 21610317
