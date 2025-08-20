@@ -1,5 +1,8 @@
 This project was made by Mitchell Bowell, student number: 21610317.
 
+This project helps create simple HTML, the HTML contains tabs that can be selected that will display information that is inputed.
+The tab name, tab style and tab page are all customisable through the website.
+
 Instructions on how to run the project:
 
 Follow these steps to set up the project locally on your machine.
