@@ -69,7 +69,6 @@ export default function Home() {
             '<div style="' + data.style + '">' + data.content.replace(/\\n/g, '<br>') + '</div>';
         }
 
-        // Show first tab by default if available
         if (tabData.length > 0) {
           showTab(0);
         }
@@ -205,6 +204,7 @@ export default function Home() {
 
       {/* New tab inputs */}
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+        {/* Tab */}
         <input
           type="text"
           placeholder="Tab name"
@@ -217,6 +217,7 @@ export default function Home() {
             fontFamily: 'monospace',
           }}
         />
+        {/* Style */}
         <input
           type="text"
           placeholder="Inline style (e.g., color: black; font-size: 14px;)"
@@ -229,6 +230,7 @@ export default function Home() {
             fontFamily: 'monospace',
           }}
         />
+        {/* Buttons */}
         <button onClick={addTab} style={{ backgroundColor: 'green', color: 'white', padding: '0.4rem 0.8rem', borderRadius: '5px', fontWeight: 'bold', border: 'none' }}>
           Add Tab
         </button>
