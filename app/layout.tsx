@@ -77,7 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           >
             <h1 id="title" style={{ margin: 0 }}>
-              This is the Title
+              Assignment 1
             </h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
