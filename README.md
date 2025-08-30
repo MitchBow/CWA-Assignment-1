@@ -1,5 +1,7 @@
 This project was made by Mitchell Bowell, student number: 21610317.
 
+MPORTANT DISCLAIMER: This repository contains coursework completed as part of my university studies. It is shared only as a portfolio demonstration. Copying, redistributing, or submitting this code for academic credit violates academic integrity policies and is prohibited.
+
 This project helps create simple HTML, the HTML contains tabs that can be selected that will display information that is inputed.
 The tab name, tab style and tab page are all customisable through the website.
 
